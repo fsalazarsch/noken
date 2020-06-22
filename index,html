@@ -1,0 +1,42 @@
+<style type="text/css">
+.frase { display:block; border: 1px solid #666666; background: white; padding: 10px; color: #333333; font-family: Courier, "Courier New", monospace; }
+.autor { color: #90000; font-weight: bold; }
+.otrafrase a { display:block;width:80px; border: 1px solid #666666; background: white; padding:5px; margin: 0px auto; text-align:center; text-decoration:none; font-weight:bold; border-radius: 5px; }
+</style>
+<script type="text/javascript">
+kanji = new Array();
+kana = new Array();
+sig = new Array();
+
+totalfrases = 0;
+function leerCITAS(json) {
+totalfrases = json.feed.entry.length;
+for(i=0; i<totalfrases; i++) {
+kanji[i] = json.feed.entry[i].gsx$kanji.$t;
+kana[i] = json.feed.entry[i].gsx$kana.$t;
+sig[i] = json.feed.entry[i].gsx$sig.$t;
+
+}
+}
+function mostrarCITAS(donde) {
+var salida = "";
+var max = totalfrases-1;
+var alea = Math.round(Math.random()*max);
+var cual = alea;
+salida += "<span class='frase'>";
+salida += kanji[cual];
+salida += "[ ";
+salida += "<span class='autor'>"+kana[cual]+"</span>]";
+salida += " = "+sig[cual];
+salida += "</span'>";
+
+document.getElementById(donde).innerHTML = salida;
+}
+</script>
+<script src="https://spreadsheets.google.com/feeds/list/16mHOxuKa_EZEljsf_INj-fn4sQsOWBTgIZUkS2oCbNI/od6/public/values?alt=json&amp;callback=leerCITAS" type="text/javascript">
+</script>
+<div id="frasesaleatorias"></div>
+<script type="text/javascript">mostrarCITAS('frasesaleatorias');</script>
+<p class="otrafrase">
+<a href="javascript:mostrarCITAS('frasesaleatorias');">Ver otro significado2</a>
+</p>
